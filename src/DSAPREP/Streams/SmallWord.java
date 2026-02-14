@@ -2,6 +2,22 @@ package DSAPREP.Streams;
 import java.util.*;
 import java.util.stream.Stream;
 
+/**
+ * Problem: Find Smallest Word and Reverse String
+ * 
+ * This file contains multiple approaches for:
+ * 1. Finding the smallest word in a string
+ * 2. Reversing words in a string
+ * 
+ * Approaches for smallest word:
+ * - Stream with min comparator
+ * - Iterative comparison
+ * - Sorting by length
+ * 
+ * Approaches for reversing:
+ * - Manual reversal with StringBuilder
+ * - Collections.reverse with String.join
+ */
 public class SmallWord {
     public static void main(String[] args) {
         String s = "Google Opensource";
