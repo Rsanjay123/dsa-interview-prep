@@ -62,23 +62,15 @@ public class SortedSquares {
         int[] result = new int[n];
         int left = 0;
         int right = n - 1;
-        
-        // Fill result from right to left (largest squares first)
-        for(int i = n - 1; i >= 0; i--){
-            // Compare absolute values to find larger square
-            if(Math.abs(nums[left]) < Math.abs(nums[right])) {
-                // Right element has larger absolute value
-                result[i] = nums[right] * nums[right];
-                right--;
-            } else {
-                // Left element has larger or equal absolute value
-                result[i] = nums[left] * nums[left];
-                left++;
-            }
+        for(int i = right; i >= 0; i--) {
+          if(Math.abs(nums[left]) < Math.abs(nums[right])) {
+            result[i] = nums[right] * nums[right];
+            right--;
+          } else {
+            result[i] = nums[left] * nums[left];
+            left++;
+          }
         }
-        
-        // Alternative approach: square all then sort (O(n log n))
-        // Arrays.sort(result);
         return result;
     }
 }

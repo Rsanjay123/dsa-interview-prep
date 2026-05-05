@@ -57,19 +57,10 @@ public class RotateArray {
      */
     public static void rotate(int [] nums, int k){
         int n = nums.length;
-        
-        // Handle case where k >= n
-        // Rotating by n brings us back to original, so k % n is effective rotation
         k = k % n;
-        
-        // Step 1: Reverse entire array
-        finalrotate(nums, 0, n-1);
-        
-        // Step 2: Reverse first k elements
-        finalrotate(nums, 0, k - 1);
-        
-        // Step 3: Reverse remaining elements
-        finalrotate(nums, k, n - 1);
+        finalRotate(nums, 0 , n - 1);
+        finalRotate(nums, 0, k - 1);
+        finalRotate(nums, k, n - 1);
     }
     
     /**
@@ -79,14 +70,13 @@ public class RotateArray {
      * @param left Start index
      * @param right End index
      */
-    private static void finalrotate(int[] nums, int left, int right){
-        while(left < right){
-            // Swap elements at left and right
-            int temp = nums[left];
-            nums[left] = nums[right];
-            nums[right] = temp;
-            left++;
-            right--;
-        }
+    private static void finalRotate(int[] nums, int left, int right) {
+      while(left < right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
+        left++;
+        right--;
+      }
     }
 }

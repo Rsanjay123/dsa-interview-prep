@@ -65,28 +65,20 @@ public class LongestKDistinctCharacters {
     public static int longestKDistinctCharacters(String s, int k) {
         int left = 0;
         int right = 0;
+        Map<Character,Integer> map = new HashMap<>();
         int maxLength = 0;
-        Map<Character, Integer> map = new HashMap<>();
-        
         for(right = 0; right < s.length(); right++) {
-            char currentChar = s.charAt(right);
-            // Add current character to map
-            map.put(currentChar, map.getOrDefault(currentChar, 0) + 1);
-            
-            // Shrink window if too many distinct characters
-            while(map.size() > k) {
-                char leftChar = s.charAt(left);
-                // Decrease frequency of left character
-                map.put(leftChar, map.get(leftChar) - 1);
-                // Remove if count reaches 0
-                if(map.get(leftChar) == 0) {
-                    map.remove(leftChar);
-                }
-                left++;
+          char currentChar = s.charAt(right);
+          map.put(currentChar, map.getOrDefault(currentChar, 0) + 1);
+          while (map.size() > k) {
+            char leftChar = s.charAt(left);
+            map.put(leftChar, map.get(leftChar) - 1);
+            if (map.get(leftChar) == 0) {
+              map.remove(leftChar);
             }
-            
-            // Update maxLength after ensuring valid window
-            maxLength = Math.max(maxLength, right - left + 1);
+            left++;
+          }
+          maxLength = Math.max(maxLength, right - left + 1);
         }
         return maxLength;
     }
@@ -104,25 +96,21 @@ public class LongestKDistinctCharacters {
     public static int longestKDistinctCharacters2(String s, int k) {
         int left = 0;
         int right = 0;
-        int maxLength = 0;
         Map<Character, Integer> map = new HashMap<>();
-        
-        while(right < s.length()){
-            char currentChar = s.charAt(right);
-            map.put(currentChar, map.getOrDefault(currentChar, 0) + 1);
-            
-            while(map.size() > k){
-                char leftChar = s.charAt(left);
-                map.put(leftChar, map.get(leftChar) - 1);
-                if(map.get(leftChar) == 0){
-                    map.remove(leftChar);
-                }
-                left++;
+        int maxLength = 0;
+        while(right < s.length()) {
+          char currentChar = s.charAt(right);
+          map.put(currentChar, map.getOrDefault(currentChar, 0) + 1);
+          while(map.size() > k) {
+            char leftChar = s.charAt(left);
+            map.put(leftChar, map.get(leftChar) - 1);
+            if(map.get(leftChar) == 0) {
+              map.remove(leftChar);
             }
-            
-            right++;
-            // Update maxLength after incrementing right
-            maxLength = Math.max(maxLength, right - left);
+            left++;
+          }
+          right++;
+          maxLength = Math.max(maxLength, right - left);
         }
         return maxLength;
     }

@@ -67,37 +67,27 @@ public class ThreeSumClosest {
      * @return Sum closest to target
      */
     public static int threeSumClosest(int[] nums, int target) {
-        // Sort array to enable two-pointer technique
         Arrays.sort(nums);
-        
-        // Initialize with first three elements
         int closestSum = nums[0] + nums[1] + nums[2];
-        
-        // Fix first number, use two pointers for remaining two
+
         for(int i = 0; i < nums.length - 2; i++) {
-            int left = i + 1;
-            int right = nums.length - 1;
-            
-            while(left < right) {
-                int currentSum = nums[i] + nums[left] + nums[right];
-                
-                // Update closestSum if currentSum is closer to target
-                if(Math.abs(currentSum - target) < Math.abs(closestSum - target)) {
-                    closestSum = currentSum;
-                }
-                
-                // Adjust pointers based on comparison with target
-                if(currentSum < target) {
-                    // Sum too small, need larger numbers
-                    left++;
-                } else if(currentSum > target) {
-                    // Sum too large, need smaller numbers
-                    right--;
-                } else {
-                    // Exact match found!
-                    return target;
-                }
+          int left = i + 1;
+          int right = nums.length - 1;
+
+          while(left < right) {
+            int currentSum = nums[i] + nums[left] + nums[right];
+            if(Math.abs(currentSum - target) < Math.abs(closestSum - target)) {
+              closestSum = currentSum;
             }
+
+            if(currentSum < target) {
+              left++;
+            } else if(currentSum > target) {
+              right--;
+            } else {
+              return target;
+            }
+          }
         }
         return closestSum;
     }

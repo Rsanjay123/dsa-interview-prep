@@ -72,25 +72,18 @@ public class LongestRepeatingCharacterReplacement {
         int[] freq = new int[26];
         int left = 0;
         int right = 0;
-        int maxFreq = 0;  // Maximum frequency of any character in current window
         int maxLength = 0;
-        
+        int maxFreq = 0;
         for(right = 0; right < s.length(); right++) {
-            char currentChar = s.charAt(right);
-            // Update frequency
-            freq[currentChar - 'A']++;
-            // Update maximum frequency
-            maxFreq = Math.max(maxFreq, freq[currentChar - 'A']);
-            
-            // Bug: Should check (right - left + 1 - maxFreq) > k
-            // Current check is incorrect
-            while ((right - left + 1) > k) {
-                char leftChar = s.charAt(left);
-                freq[leftChar - 'A']--;
-                left++;
-            }
-            
-            maxLength = Math.max(maxLength, right - left + 1);
+          char currentChar = s.charAt(right);
+          freq[currentChar - 'A']++;
+          maxFreq = Math.max(maxFreq, freq[currentChar - 'A']);
+          while((right - left + 1) - maxFreq > k) {
+            char leftChar = s.charAt(left);
+            freq[leftChar - 'A']--;
+            left++;
+          }
+          maxLength = Math.max(maxLength, right - left + 1);
         }
         return maxLength;
     }
@@ -103,27 +96,23 @@ public class LongestRepeatingCharacterReplacement {
      * @return Length of longest substring
      */
     public static int longestRepeatingCharacterReplacement2(String s, int k) {
-        int[] freq = new int[26];
-        int left = 0;
-        int right = 0;
-        int maxFreq = 0;
-        int maxLength = 0;
-        
-        while(right < s.length()) {
-            char currentChar = s.charAt(right);
-            freq[currentChar - 'A']++;
-            maxFreq = Math.max(maxFreq, freq[currentChar - 'A']);
-            
-            // Bug: Should check (right - left + 1 - maxFreq) > k
-            while((right - left + 1) > k) {
-                char leftChar = s.charAt(left);
-                freq[leftChar - 'A']--;
-                left++;
-            }
-            
-            right++;
-            maxLength = Math.max(maxLength, right - left);
+      int[] freq = new int[26];
+      int left = 0;
+      int right = 0;
+      int maxFreq = 0;
+      int maxLength = 0;
+      while(right < s.length()) {
+        char currentChar = s.charAt(right);
+        freq[currentChar - 'A']++;
+        maxFreq = Math.max(maxFreq, freq[currentChar - 'A']);
+        while ((right - left + 1) - maxFreq > k) {
+          char leftChar = s.charAt(left);
+          freq[leftChar - 'A']--;
+          left++;
         }
-        return maxLength;
+        right++;
+        maxLength = Math.max(maxLength, right - left);
+        }
+      return maxLength;
     }
 }

@@ -65,33 +65,25 @@ public class TrappingRainWater {
     public static int trap(int[] height) {
         int left = 0;
         int right = height.length - 1;
-        int leftMax = 0;   // Maximum height seen from left side
-        int rightMax = 0;   // Maximum height seen from right side
+        int leftMax = 0;
+        int rightMax = 0;
         int water = 0;
-        
         while(left < right) {
-            // Process the side with smaller height
-            if(height[left] < height[right]) {
-                // Process left side
-                if(height[left] >= leftMax){
-                    // Current height is new maximum, no water trapped here
-                    leftMax = height[left];
-                } else {
-                    // Water trapped = difference between max and current height
-                    water += leftMax - height[left];
-                }
-                left++;
+          if(height[left] < height[right]) {
+            if(height[left] >= leftMax) {
+              leftMax = height[left];
             } else {
-                // Process right side
-                if(height[right] >= rightMax) {
-                    // Current height is new maximum, no water trapped here
-                    rightMax = height[right];
-                } else {
-                    // Water trapped = difference between max and current height
-                    water += rightMax - height[right];
-                }
-                right--;
+              water += leftMax - height[left];
             }
+            left++;
+          } else {
+            if(height[right] >= rightMax) {
+              rightMax = height[right];
+            } else {
+              water += rightMax - height[right];
+            }
+            right--;
+          }
         }
         return water;
     }

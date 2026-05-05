@@ -46,21 +46,16 @@ public class LongestSubstringRepeatingCharacters {
         int right = 0;
         int maxLength = 0;
         Set<Character> set = new HashSet<>();
-        
-        while(right < chars.length()){
-            char currentChar = chars.charAt(right);
-            
-            if(!set.contains(currentChar)){
-                // Character not seen, add to set and expand window
-                set.add(currentChar);
-                maxLength = Math.max(maxLength, right - left + 1);
-                right++;
-            } else {
-                // Character already in set, shrink window from left
-                // Bug: Should remove the character causing duplicate, not left char
-                set.remove(chars.charAt(left));
-                left++;
-            }
+        while (right < chars.length()) {
+          char currentChar = chars.charAt(right);
+          if(!set.contains(currentChar)) {
+            set.add(currentChar);
+            maxLength = Math.max(maxLength, right- left + 1);
+            right++;
+          } else {
+            set.remove(chars.charAt(left));
+            left++;
+          }
         }
         return maxLength;
     }
@@ -97,25 +92,15 @@ public class LongestSubstringRepeatingCharacters {
         int left = 0;
         int right = 0;
         int maxLength = 0;
-        // Map stores: (character, its last seen index)
         Map<Character, Integer> map = new HashMap<>();
-        
-        while(right < s.length()){
-            char currentChar = s.charAt(right);
-            
-            // If character seen before and its last occurrence is within current window
-            if(map.containsKey(currentChar)){
-                // Move left pointer to after the last occurrence of this character
-                // Math.max ensures left only moves forward, never backward
-                left = Math.max(left, map.get(currentChar) + 1);
-            }
-            
-            // Update/insert current character's index
-            map.put(currentChar, right);
-            
-            // Update maximum length
-            maxLength = Math.max(maxLength, right - left + 1);
-            right++;
+        while(right < s.length()) {
+          char currentChar = s.charAt(right);
+          if(map.containsKey(currentChar)) {
+            left = Math.max(left, map.get(currentChar) + 1);
+          }
+          map.put(currentChar, right);
+          maxLength = Math.max(maxLength, right -left + 1);
+          right++;
         }
         return maxLength;
     }
@@ -133,25 +118,17 @@ public class LongestSubstringRepeatingCharacters {
      * Space Complexity: O(min(n,m))
      */
     public static int longestSubString3(String s) {
-        int left = 0;
+        int left =  0;
         int right = 0;
         int maxLength = 0;
         Map<Character, Integer> map = new HashMap<>();
-        
         for(right = 0; right < s.length(); right++) {
-            char currentChar = s.charAt(right);
-            
-            // If character seen before AND its last occurrence is within current window
-            if(map.containsKey(currentChar) && map.get(currentChar) >= left){
-                // Move left pointer to after the last occurrence
-                left = map.get(currentChar) + 1;
-            }
-            
-            // Update character's last seen index
-            map.put(currentChar, right);
-            
-            // Update maximum length
-            maxLength = Math.max(maxLength, right - left + 1);
+          char currentChar = s.charAt(right);
+          if(map.containsKey(currentChar) && map.get(currentChar) >= left) {
+            left = map.get(currentChar) + 1;
+          }
+          map.put(currentChar, right);
+          maxLength = Math.max(maxLength, right - left + 1);
         }
         return maxLength;
     }

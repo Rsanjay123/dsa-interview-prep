@@ -65,26 +65,17 @@ public class SearchInsertPosition {
      */
     public static int searchInsert(int[] nums, int target) {
         int left = 0;
-        int right = nums.length - 1;
-        
-        while (left <= right) {
-            // Calculate middle index (avoid overflow)
-            int mid = left + (right - left)/2;
-            
-            if(nums[mid] == target) {
-                // Target found!
-                return mid;
-            } else if(nums[mid] < target){
-                // Target is in right half
-                left = mid + 1;
-            } else {
-                // Target is in left half
-                right = mid - 1;
-            }
+        int right= nums.length - 1;
+        while(left <= right) {
+          int mid = left + (right - left)/2;
+          if(nums[mid] == target) {
+            return mid;
+          } else if(nums[mid] < target) {
+            left = mid + 1;
+          } else {
+            right = mid - 1;
+          }
         }
-        
-        // Target not found - left points to insertion position
-        // left is the first index where nums[left] >= target
         return left;
     }
 
@@ -113,14 +104,11 @@ public class SearchInsertPosition {
      * @return Index where target is found or should be inserted
      */
     public static int searchInsert2(int[] nums, int target) {
-        // Ensure array is sorted (though it should already be)
-        Arrays.sort(nums);
-        
-        // Find first index where element >= target
-        // If not found, return array length (insert at end)
-        return IntStream.range(0, nums.length)
-                .filter(i -> nums[i] >= target)
-                .findFirst()
-                .orElse(nums.length);
+       Arrays.sort(nums);
+
+       return IntStream.range(0, nums.length)
+           .filter(i -> nums[i] >= target)
+           .findFirst()
+           .orElse(nums.length);
     }
 }

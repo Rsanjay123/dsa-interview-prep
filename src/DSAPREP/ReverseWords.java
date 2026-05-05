@@ -27,11 +27,26 @@ import java.util.*;
 public class ReverseWords {
     public static void main(String[] args) {
         String s = "  hello world  ";
+        char[] s2 = {'h', 'e', 'l', 'l', 'o', 'w', 'o', 'r', 'l', 'd'};
+        reverseString(s2);
         System.out.println(reverseWords(s));
         System.out.println(reverseWords2(s));
     }
 
-    /**
+  private static void reverseString(char[] s2) {
+      int left = 0;
+      int right = s2.length - 1;
+      while(left < right) {
+        char temp = s2[left];
+        s2[left] = s2[right];
+        s2[right] = temp;
+        left++;
+        right--;
+      }
+      System.out.println(Arrays.toString(s2));
+  }
+
+  /**
      * Approach 1: Manual Reversal with StringBuilder
      * 
      * Algorithm:
@@ -61,17 +76,13 @@ public class ReverseWords {
      * @return String with words in reverse order
      */
     public static String reverseWords(String s) {
-        // Trim leading/trailing spaces and split by one or more whitespace
         String[] words = s.trim().split("\\s+");
         StringBuilder sb = new StringBuilder();
-        
-        // Iterate from end to start to reverse word order
         for(int i = words.length - 1; i >= 0; i--) {
-            sb.append(words[i]);
-            // Add space between words (but not after the last word)
-            if(i > 0) {
-                sb.append(" ");
-            }
+          sb.append(words[i]);
+          if(i > 0) {
+            sb.append(" ");
+          }
         }
         return sb.toString();
     }
@@ -97,14 +108,8 @@ public class ReverseWords {
      * @return String with words in reverse order
      */
     public static String reverseWords2(String s) {
-        // Trim and split into words
         String[] words = s.trim().split("\\s+");
-        
-        // Reverse the array by converting to list and reversing
-        // Note: Arrays.asList() creates a view, so reversing modifies the original array
         Collections.reverse(Arrays.asList(words));
-        
-        // Join words with single space
         return String.join(" ", words);
     }
 }

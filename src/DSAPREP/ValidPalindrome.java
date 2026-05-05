@@ -60,37 +60,25 @@ public class ValidPalindrome {
      * @return true if the string is a palindrome, false otherwise
      */
     public static boolean isPalindrome(String s) {
-        int left = 0;
-        int right = s.length() - 1;
-        
-        while(left < right) {
-            char leftChar = s.charAt(left);
-            char rightChar = s.charAt(right);
-            
-            // Skip non-alphanumeric characters from left
-            if(!Character.isLetterOrDigit(leftChar)) {
-                left++;
-                continue;
-            }
-            
-            // Skip non-alphanumeric characters from right
-            if(!Character.isLetterOrDigit(rightChar)) {
-                right--;
-                continue;
-            }
-            
-            // Compare characters case-insensitively
-            // Convert both to lowercase before comparison
-            if(Character.toLowerCase(leftChar) != Character.toLowerCase(rightChar)) {
-                return false;
-            }
-            
-            // Characters match, move both pointers inward
-            left++;
-            right--;
+      int left = 0;
+      int right = s.length() - 1;
+      while(left < right) {
+        char leftChar = s.charAt(left);
+        char rightChar = s.charAt(right);
+        if(!Character.isLetterOrDigit(leftChar)) {
+          left++;
+          continue;
         }
-        
-        // All character pairs matched
-        return true;
+        if(!Character.isLetterOrDigit(rightChar)) {
+          right--;
+          continue;
+        }
+        if(Character.toLowerCase(leftChar) != Character.toLowerCase(rightChar)) {
+          return false;
+        }
+        left++;
+        right--;
+      }
+      return true;
     }
 }

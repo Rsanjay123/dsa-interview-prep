@@ -78,38 +78,28 @@ public class ZigZagConversion {
      * @return String read row by row from zigzag pattern
      */
     public static String convert(String s, int numRows){
-        // Edge cases: 1 row or string shorter than rows
-        if(numRows <= 1 || s.length() <= numRows){
-            return s;
+        if(numRows < 1 || s.length() < numRows) {
+          return  s;
         }
-        
-        // Create StringBuilder for each row
         StringBuilder[] rows = new StringBuilder[numRows];
         for(int i = 0; i < numRows; i++) {
-            rows[i] = new StringBuilder();
+          rows[i] = new StringBuilder();
         }
-        
         int currentRow = 0;
-        boolean goingDown = false;  // Direction: true = down, false = up
-        
-        // Distribute characters to rows
-        for(char c: s.toCharArray()){
-            // Append character to current row
-            rows[currentRow].append(c);
-            
-            // Change direction at top or bottom
-            if(currentRow == 0 || currentRow == numRows - 1){
-                goingDown = !goingDown;
-            }
-            
-            // Move to next row based on direction
-            currentRow += goingDown ? 1: -1;
+        boolean goingDown = false;
+
+        for(int i = 0; i < s.length(); i++) {
+          char c = s.charAt(i);
+          rows[currentRow].append(c);
+          if(currentRow == 0 || currentRow == numRows - 1) {
+            goingDown = !goingDown;
+          }
+          currentRow += goingDown ? 1 : -1;
         }
-        
-        // Concatenate all rows
+
         StringBuilder result = new StringBuilder();
-        for(StringBuilder row: rows){
-            result.append(row);
+        for(StringBuilder row: rows) {
+          result.append(row);
         }
         return result.toString();
     }
@@ -124,30 +114,24 @@ public class ZigZagConversion {
      * @return String read row by row from zigzag pattern
      */
     public static String convert2(String s, int numRows) {
-        // Edge cases
-        if(numRows <= 1 || s.length() <= numRows){
-            return s;
+      if(numRows < 1 || s.length() < numRows) {
+        return s;
+      }
+      StringBuilder[] rows = new StringBuilder[numRows];
+      Arrays.setAll(rows, i -> new StringBuilder());
+      int currentRow = 0;
+      boolean goingDown = false;
+
+      for(int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        rows[currentRow].append(c);
+        if(currentRow == 0 || currentRow == numRows - 1) {
+          goingDown = !goingDown;
         }
-        
-        // Initialize StringBuilders using Arrays.setAll
-        StringBuilder[] rows = new StringBuilder[numRows];
-        Arrays.setAll(rows, i -> new StringBuilder());
-        
-        int currentRow = 0;
-        boolean goingDown = false;
-        
-        // Distribute characters (same logic as convert)
-        for(char c: s.toCharArray()){
-            rows[currentRow].append(c);
-            if(currentRow == 0 || currentRow == numRows - 1){
-                goingDown = !goingDown;
-            }
-            currentRow += goingDown ? 1 : -1;
-        }
-        
-        // Concatenate using stream collect
-        return Arrays.stream(rows)
-                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
-                .toString();
+        currentRow += goingDown ? 1 : -1;
+      }
+      return Arrays.stream(rows)
+          .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+          .toString();
     }
 }

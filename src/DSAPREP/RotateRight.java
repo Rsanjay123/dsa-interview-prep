@@ -44,13 +44,26 @@ public class RotateRight {
         head.next.next.next.next = new ListNode(5);
         int k = 2;
         ListNode result = rotateRight(head, k);
+//        ListNode result2 = reverseList(head);
         while(result != null) {
             System.out.print(result.val + " ");
             result = result.next;
         }
     }
 
-    /**
+//  private static ListNode reverseList(ListNode head) {
+//      ListNode prev = null;
+//      ListNode curr = head;
+//      while(curr != null) {
+//        ListNode next = curr.next;
+//        curr.next = prev;
+//        prev = curr;
+//        curr = next;
+//      }
+//      return prev;
+//  }
+
+  /**
      * Rotates the linked list to the right by k places
      * 
      * @param head The head of the linked list
@@ -58,44 +71,24 @@ public class RotateRight {
      * @return The new head of the rotated linked list
      */
     public static ListNode rotateRight(ListNode head, int k) {
-        // Edge cases: empty list, single node, or no rotation needed
         if(head == null || head.next == null || k == 0) {
-            return head;
+          return head;
         }
-        
-        // Step 1: Find the length of the list and reach the tail
         ListNode temp = head;
         int length = 1;
-        while(temp.next != null){
-            temp = temp.next;
-            length++;
+        while(temp.next != null) {
+          temp = temp.next;
+          length++;
         }
-        // Now temp points to the tail node
-        
-        // Step 2: Make the list circular by connecting tail to head
         temp.next = head;
-        
-        // Step 3: Calculate effective rotations
-        // If k >= length, rotating k times is same as rotating k % length times
         k = k % length;
-        
-        // Step 4: Calculate how many steps we need to move from head to find new tail
-        // The new tail will be at position (length - k) from the start
-        // Example: length=5, k=2, new tail is at position 3 (0-indexed: 0,1,2)
         int stepsToNewTail = length - k;
-        
-        // Step 5: Traverse to find the new tail node
         ListNode newTail = head;
         for(int i = 1; i < stepsToNewTail; i++) {
-            newTail = newTail.next;
+          newTail = newTail.next;
         }
-        
-        // Step 6: The new head is the node after the new tail
         ListNode newHead = newTail.next;
-        
-        // Step 7: Break the circular connection
         newTail.next = null;
-        
         return newHead;
     }
 }

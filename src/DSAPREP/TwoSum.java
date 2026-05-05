@@ -51,26 +51,19 @@ public class TwoSum {
      * @return Array containing indices of two numbers that sum to target, or [-1, -1] if not found
      */
     public static int[] twosum(int[] arr, int target){
-        int left = 0;
-        int right = arr.length - 1;
-        
-        while(left < right) {
-            int sum = arr[left] + arr[right];
-            
-            if(sum == target){
-                // Found the pair!
-                return new int[]{left, right};
-            } else if(sum < target) {
-                // Sum is too small, need larger numbers - move left pointer right
-                left++;
-            } else {
-                // Sum is too large, need smaller numbers - move right pointer left
-                right--;
-            }
+      int left = 0;
+      int right = arr.length - 1;
+      while(left < right) {
+        int sum = arr[left] + arr[right];
+        if(sum == target) {
+          return new int[] {left, right};
+        } else if(sum < target) {
+          left++;
+        } else {
+          right--;
         }
-        
-        // No pair found
-        return new int[]{-1, -1};
+      }
+      return new int[] {-1, -1};
     }
 
     /**
@@ -105,24 +98,14 @@ public class TwoSum {
      * @return Array containing indices of two numbers that sum to target, or [-1, -1] if not found
      */
     public static int[] twoSum2(int[] arr, int target){
-        // Map stores: (number value, its index)
-        Map<Integer, Integer> map = new HashMap<>();
-        
-        for(int i = 0; i < arr.length; i++){
-            // Calculate what number we need to pair with arr[i] to get target
-            int compliment = target - arr[i];
-            
-            // Check if we've seen this complement before
-            if(map.containsKey(compliment)){
-                // Found it! Return indices: [previous index, current index]
-                return new int[]{map.get(compliment), i};
-            }
-            
-            // Store current number and its index for future lookups
-            map.put(arr[i], i);
+      Map<Integer, Integer> map = new HashMap<>();
+      for(int i = 0; i < arr.length; i++) {
+        int compliment = target - arr[i];
+        if(map.containsKey(compliment)) {
+          return new int[]{map.get(compliment), i};
         }
-        
-        // No pair found
-        return new int[]{-1, -1};
+        map.put(arr[i], i);
+      }
+      return new int[]{-1, -1};
     }
 }

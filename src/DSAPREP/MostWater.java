@@ -70,29 +70,16 @@ public class MostWater {
         int left = 0;
         int right = arr.length - 1;
         int maxArea = 0;
-        
-        while(left < right){
-            // Calculate width between two lines
-            int width = right - left;
-            
-            // Height is limited by the shorter line (water would overflow)
-            int height = Math.min(arr[left], arr[right]);
-            
-            // Calculate area
-            int area = width * height;
-            
-            // Update maximum area seen so far
-            maxArea = Math.max(maxArea, area);
-            
-            // Move the pointer with smaller height
-            // This is the key insight: we want to potentially find a taller line
-            if(arr[left] < arr[right]){
-                // Left line is shorter, move left pointer right
-                left++;
-            } else {
-                // Right line is shorter or equal, move right pointer left
-                right--;
-            }
+        while(left < right) {
+          int width = right - left;
+          int height = Math.min(arr[left], arr[right]);
+          int area = width * height;
+          maxArea = Math.max(maxArea, area);
+          if(arr[left] < arr[right]) {
+            left++;
+          } else {
+            right--;
+          }
         }
         return maxArea;
     }

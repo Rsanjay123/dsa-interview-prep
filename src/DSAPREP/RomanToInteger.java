@@ -72,36 +72,26 @@ public class RomanToInteger {
      * @return Integer value
      */
     public static int romanToInt(String s) {
-        // Map Roman symbols to their values
-        Map<Character, Integer> romanMap = new HashMap<>();
-        romanMap.put('I', 1);
-        romanMap.put('V', 5);
-        romanMap.put('X', 10);
-        romanMap.put('L', 50);
-        romanMap.put('C', 100);
-        romanMap.put('D', 500);
-        romanMap.put('M', 1000);
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
 
         int total = 0;
         int n = s.length();
-        
         for(int i = 0; i < n; i++) {
-            char currentValue = s.charAt(i);
-            char nextValue = (i + 1 < n) ? s.charAt(i + 1) : ' ';
-            
-            // Check if current value should be subtracted
-            // This happens when current < next (e.g., IV, IX, XL, XC, CD, CM)
-            if(romanMap.containsKey(currentValue) && 
-               romanMap.containsKey(nextValue) && 
-               (romanMap.get(currentValue) < romanMap.get(nextValue))){
-                // Subtract current value (will be compensated when we process next)
-                total -= romanMap.get(currentValue);
-            } else {
-                // Add current value normally
-                total += romanMap.get(currentValue);
-            }
+          char currentValue = s.charAt(i);
+          char nextValue = (i + 1 < n) ? s.charAt(i + 1) : ' ';
+          if(map.containsKey(currentValue) && map.containsKey(nextValue) && (map.get(currentValue) < map.get(nextValue))) {
+            total -= map.get(currentValue);
+          } else {
+            total += map.get(currentValue);
+          }
         }
-        
         return total;
     }
 }

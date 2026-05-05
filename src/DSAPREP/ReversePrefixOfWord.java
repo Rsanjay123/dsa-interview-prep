@@ -41,9 +41,31 @@ public class ReversePrefixOfWord {
         String word = "abcdefd";
         char ch = 'd';
         System.out.println(reversePrefix(word, ch));
+        System.out.println(reversePrefix2(word, ch));
     }
 
-    /**
+  private static String reversePrefix2(String word, char ch) {
+      if(word.isEmpty() || word.length() == 1) {
+        return word;
+      }
+      int index = word.indexOf(ch);
+      if(index == -1) {
+        return word;
+      }
+      int left = 0;
+      int right = index;
+      char[] arr = word.toCharArray();
+      while(left < right) {
+        char temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+        left++;
+        right--;
+      }
+      return new String(arr);
+  }
+
+  /**
      * Reverses the prefix of word up to first occurrence of ch
      * 
      * @param words Input string

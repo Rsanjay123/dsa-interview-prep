@@ -22,11 +22,30 @@ import java.util.*;
 public class SingleNumber {
     public static void main(String[] args){
         int[] nums = {4,1,2,1,2};
+        List<Integer> numbers = Arrays.asList(4,1,2,1,2);
+        System.out.println(singleNumberList(numbers));
         System.out.println(singleNumber(nums));
         System.out.println(singleNumberXoR(nums));
     }
 
-    /**
+  private static int singleNumberList(List<Integer> numbers) {
+      Map<Integer, Integer> map = new HashMap<>();
+      for(int num: numbers) {
+        if(!map.containsKey(num)) {
+          map.put(num, 1);
+        } else {
+          map.replace(num, map.get(num) + 1);
+        }
+      }
+      for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        if(entry.getValue() == 1) {
+          return entry.getKey();
+        }
+      }
+      return -1;
+  }
+
+  /**
      * Approach 1: HashMap (Frequency Counting)
      * 
      * Algorithm:
@@ -42,23 +61,19 @@ public class SingleNumber {
      * @return The single number that appears only once
      */
     public static int singleNumber(int[] nums) {
-        // Map stores: (number, its frequency)
         Map<Integer, Integer> map = new HashMap<>();
-        
-        // Count frequency of each number
-        for(int num: nums) {
-            if(!map.containsKey(num)) {
-                map.put(num, 1);
-            } else {
-                map.replace(num, map.get(num) + 1);
-            }
+        for(int num : nums) {
+          if(!map.containsKey(num)) {
+            map.put(num, 1);
+          } else {
+            map.replace(num, map.get(num) + 1);
+          }
         }
-        
-        // Find the number with frequency 1
-        for(Map.Entry<Integer, Integer> entry : map.entrySet()){
-            if(entry.getValue() == 1) {
-                return entry.getKey();
-            }
+
+        for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
+          if(entry.getValue() == 1) {
+            return entry.getKey();
+          }
         }
         return -1;
     }
@@ -103,13 +118,9 @@ public class SingleNumber {
      */
     public static int singleNumberXoR(int[] nums) {
         int result = 0;
-        
-        // XOR all numbers together
-        // Pairs will cancel out, leaving only the single number
-        for(int num: nums) {
-            result ^= num;
+        for(int num : nums) {
+          result ^= num;
         }
-        
         return result;
     }
 }

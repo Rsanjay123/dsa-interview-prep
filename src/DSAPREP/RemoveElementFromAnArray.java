@@ -53,11 +53,42 @@ import java.util.*;
 public class RemoveElementFromAnArray {
     public static void main(String[] args) {
         int[] arr = {3,2,2,3,4};
+        ArrayList<Integer> list = new ArrayList<>(List.of(4, 1, 1, 2, 1, 3, 6));
         int val = 3;
+        System.out.println(removeElement2(list, 1));
         System.out.println(Arrays.toString(removeElement(arr, val)));
     }
 
-    /**
+  private static int removeElement2(ArrayList<Integer> list, int val) {
+//      int[] arr = list.stream().mapToInt(Integer::intValue).toArray();
+//      int result = Arrays.stream(arr).distinct().filter(x -> x != val).toArray().length;
+//      return result;
+//    int[] arr = list.stream().mapToInt(Integer::intValue).toArray();
+//    Map<Integer, Integer> map = new HashMap<>();
+//    for(int num: arr) {
+//      if (num != val) {
+//        if (!map.containsKey(num)) {
+//          map.put(num, 1);
+//        } else {
+//          map.putIfAbsent(num, map.get(num) + 1);
+//        }
+//      }
+//    }
+//    return map.size();
+    int k = 0;
+    for(int i = 0; i< list.size(); i++) {
+      if(!list.get(i).equals(val)) {
+        list.set(k, list.get(i));
+        k++;
+      }
+    }
+    if(k < list.size()) {
+      list.subList(k, list.size()).clear();
+    }
+    return k;
+  }
+
+  /**
      * Removes all occurrences of val from array in-place
      * 
      * @param nums Array to modify

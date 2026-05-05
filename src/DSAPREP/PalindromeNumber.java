@@ -42,10 +42,26 @@ import java.util.*;
 public class PalindromeNumber {
     public static void main(String[] args) {
         int num = 121;
+        int n = 2147447412;
+        System.out.println(Palindrome(n));
         System.out.println(isPalindrome(num));
     }
 
-    /**
+  private static int Palindrome(int n) {
+      int rev = 0;
+      int temp = n;
+      while(temp > 0) {
+          int digit = temp % 10;
+          rev = rev * 10 + digit;
+          temp = temp / 10;
+      }
+      if(rev == n) {
+          return 1;
+      }
+      return 0;
+  }
+
+  /**
      * Checks if a number is a palindrome
      * 
      * @param x The integer to check
