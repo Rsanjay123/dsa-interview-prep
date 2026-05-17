@@ -14,8 +14,13 @@ public class MajorityElement {
     Map<Integer, Integer> map = new HashMap<>();
     for(int num: arr) {
       map.put(num, map.getOrDefault(num, 0) + 1);
-      if(map.get(num) > n/2) {
-        return num;
+//      if(map.get(num) > n/2) {
+//        return num;
+
+    }
+    for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
+      if(entry.getValue() > n/2) {
+        return entry.getKey();
       }
     }
     return -1;

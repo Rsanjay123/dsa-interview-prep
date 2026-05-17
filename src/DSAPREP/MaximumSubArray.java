@@ -25,7 +25,7 @@ public class MaximumSubArray {
 
   private static ArrayList<Integer> maxNonNegativeSubArray(int[] arr) {
     int sum = 0;
-    int maxSum = Integer.MIN_VALUE;
+    int val = Integer.MIN_VALUE;
     ArrayList<Integer> result = new ArrayList<>();
     ArrayList<Integer> temp = new ArrayList<>();
     for(int i = 0; i < arr.length; i++) {
@@ -33,8 +33,8 @@ public class MaximumSubArray {
         sum += arr[i];
         temp.add(arr[i]);
       } else {
-        if(sum > maxSum) {
-          maxSum = sum;
+        if(sum > val) {
+          val = sum;
           result.clear();
           result.addAll(temp);
         }
@@ -42,7 +42,7 @@ public class MaximumSubArray {
         temp.clear();
       }
     }
-    if(sum > maxSum) {
+    if(sum > val) {
       result.clear();
       result.addAll(temp);
     }
