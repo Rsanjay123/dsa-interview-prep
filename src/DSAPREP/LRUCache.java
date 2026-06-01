@@ -9,6 +9,7 @@ public class LRUCache {
     int value;
     Node next;
     Node prev;
+
     public Node(int key, int value) {
       this.key = key;
       this.value = value;
@@ -30,7 +31,7 @@ public class LRUCache {
   }
 
   public int get(int key) {
-    if (!map.containsKey(key)) {
+    if(!map.containsKey(key)) {
       return -1;
     }
     Node node = map.get(key);
@@ -54,16 +55,17 @@ public class LRUCache {
     }
   }
 
-  private void insertAtHead(Node node) {
-    Node newNode = head.next;
-    head.next = node;
-    node.prev = head;
-    node.next = newNode;
-    newNode.prev = node;
-  }
-
   private void remove(Node node) {
     node.prev.next = node.next;
     node.next.prev = node.prev;
   }
+
+  private void insertAtHead(Node node) {
+    Node nextNode = head.next;
+    head.next = node;
+    node.prev = head;
+    node.next = nextNode;
+    nextNode.prev = node;
+  }
+
 }
