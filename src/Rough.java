@@ -13,12 +13,23 @@ public class Rough {
 //    String s = "Hello World";
 //    System.out.println(lengthOfLastWord(s));
 //    System.out.println(Arrays.toString(result));
-    print();
+//    print();
+    ArrayList<Integer> list = new ArrayList<>(List.of(4, 1, 1, 2, 1, 3));
+    int target = 1;
+    int sol = removeDuplicates(list, target);
+    System.out.println(sol);
   }
-  public int removeDuplicates(ArrayList<Integer> a) {
-    a.clear();
-    a.addAll(a.stream().distinct().collect(Collectors.toList()));
-    return a.size();
+  public static int removeDuplicates(ArrayList<Integer> a, int target) {
+//    a.clear();
+//    a.addAll(a.stream().distinct().collect(Collectors.toList()));
+//    return a.size();
+    int[] arr = a.stream().mapToInt(Integer::intValue).toArray();
+    Map<Integer, Integer> map = new LinkedHashMap<>();
+    for(int i = 0; i < arr.length; i++) {
+      map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
+    }
+    map.remove(target);
+    return map.size();
   }
 
   public static void print() {

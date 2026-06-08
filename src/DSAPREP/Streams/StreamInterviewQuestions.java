@@ -1,6 +1,7 @@
 package DSAPREP.Streams;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,18 +53,22 @@ public class StreamInterviewQuestions {
         new Employee("Sairam", "HR", 56000),
         new Employee("Suresh", "IT", 90000));
 
+    String s = "hello";
+    Map<Character, Long> collect = s.chars().mapToObj(c -> (char) c).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    System.out.println(collect);
+
     List<Integer> numbers = Arrays.asList(24, 12, 36, 48, 60, 53, 73, 87, 91, 21);
-
-    List<Integer> numList = Arrays.asList(1, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10);
-    //return a list of unique numbers from the given list
-    List<Integer> distinctNums = numList.stream().distinct().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
-    System.out.println(distinctNums);
-
-    streamOperationsOnNames();
 //
-//    streamOperationsNumberList(numbers);
+//    List<Integer> numList = Arrays.asList(1, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10);
+//    //return a list of unique numbers from the given list
+//    List<Integer> distinctNums = numList.stream().distinct().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+//    System.out.println(distinctNums);
 //
-//    streamOperationsOnEmployees(list);
+//    streamOperationsOnNames();
+//
+    streamOperationsNumberList(numbers);
+//
+    streamOperationsOnEmployees(list);
   }
 
   private static void streamOperationsOnNames() {
@@ -81,18 +86,18 @@ public class StreamInterviewQuestions {
 
   private static void streamOperationsNumberList(List<Integer> numbers) {
     //sum of all even numbers
-    int sumEven = numbers.stream().filter(n -> n % 2 == 0).mapToInt(Integer::intValue).sum();
-    System.out.println(sumEven);
+    int sumOfEvenNumbers = numbers.stream().filter(n -> n % 2 == 0).mapToInt(Integer::intValue).sum();
+    System.out.println(sumOfEvenNumbers);
     //sum of all odd numbers
-    int sumOdd = numbers.stream().filter(n -> n % 2 != 0).mapToInt(Integer::intValue).sum();
-    System.out.println(sumOdd);
+    int sumOfOddNumbers = numbers.stream().filter(n -> n % 2 != 0).mapToInt(Integer::intValue).sum();
+    System.out.println(sumOfOddNumbers);
     //return a list of squares of all even numbers
-    List<Integer> squaresNum = numbers.stream().filter(n -> n % 2 == 0).map(n -> n * n).sorted().collect(Collectors.toList());
-    System.out.println(squaresNum);
-    //return a list of squares of all odd numbers
-    List<Integer> squaresNumOdd = numbers.stream().filter(n -> n % 2 != 0).map(n -> n * n).sorted().collect(Collectors.toList());
-    System.out.println(squaresNumOdd);
-    //return a list of all even numbers
+    List<Integer> squaresOfEvenNumbers = numbers.stream().filter(n -> n % 2 == 0).map(n -> n * n).sorted().collect(Collectors.toList());
+    System.out.println(squaresOfEvenNumbers);
+//    //return a list of squares of all odd numbers
+    List<Integer> squaresOfOddNumbers = numbers.stream().filter(n -> n % 2 != 0).map(n -> n * n).sorted().collect(Collectors.toList());
+    System.out.println(squaresOfOddNumbers);
+//    //return a list of all even numbers
     List<Integer> evenNumbers = numbers.stream().filter(n -> n % 2 == 0).sorted().collect(Collectors.toList());
     System.out.println(evenNumbers);
   }
@@ -105,17 +110,16 @@ public class StreamInterviewQuestions {
     Map<String, Double> map2 = list.stream().collect(Collectors.toMap(Employee::getDepartment, Employee::getSalary, Double::max));
     System.out.println(map2);
     //employee with the highest salary in each department
-    Map<String, Optional<Employee>> map3 = list.stream().collect(Collectors.groupingBy(Employee::getDepartment, Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))));
-    map3.forEach((dept, emp) -> emp.ifPresent(e -> System.out.println(dept + " -> " + e.getName() + " : " + e.getSalary())));
+    Map<String, Optional<Employee>> map3 = list.stream().collect(Collectors.groupingBy(Employee::getDepartment, Collectors.maxBy(Comparator.comparing(Employee::getSalary))));
+    map3.forEach((dept, emp) -> emp.ifPresent(e -> System.out.println(e.getDepartment() + " -> " + e.getName() + ":" + e.getSalary())));
     //highest salary in the office
     double maxSalary = list.stream().mapToDouble(Employee::getSalary).max().orElse(0.0);
     System.out.println(maxSalary);
     //second-highest salary in the office
-    Double secondHighestSalary = list.stream().mapToDouble(Employee::getSalary).boxed().sorted(Comparator.reverseOrder()).skip(1).findFirst().orElse(0.0);
+    double secondHighestSalary = list.stream().mapToDouble(Employee::getSalary).boxed().sorted(Comparator.reverseOrder()).skip(1).findFirst().orElse(0.0);
     System.out.println(secondHighestSalary);
-
     //return employees whose names starts with 'S'
-    List<Employee> s = list.stream().filter(e -> e.getName().startsWith("S")).sorted(Comparator.comparing(Employee::getName)).collect(Collectors.toList());
-    s.forEach(e -> System.out.println(e.getName().toUpperCase()));
+    List<Employee> namesListWithS = list.stream().filter(e -> e.getName().startsWith("S")).collect(Collectors.toList());
+    namesListWithS.forEach(e -> System.out.println(e.getName().toUpperCase()));
   }
 }

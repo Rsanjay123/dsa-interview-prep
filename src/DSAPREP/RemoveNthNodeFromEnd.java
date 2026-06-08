@@ -55,10 +55,15 @@ public class RemoveNthNodeFromEnd {
         head.next.next.next.next = new ListNode(5);
         int n = 2;
         ListNode result = removeNthFromEnd(head, n);
-        while(result != null) {
-            System.out.print(result.val + " ");
-            result = result.next;
+        ListNode result2 = removeNode(head, n);
+        while (result2 != null) {
+            System.out.print(result2.val + " ");
+            result2 = result2.next;
         }
+//        while(result != null) {
+//            System.out.print(result.val + " ");
+//            result = result.next;
+//        }
     }
 
     /**
@@ -92,5 +97,23 @@ public class RemoveNthNodeFromEnd {
         
         // Return the actual head (skip dummy node)
         return dummy.next;
+    }
+
+    //remove particular node from the list
+    public static ListNode removeNode(ListNode head, int n) {
+      if(head == null || head.next == null) {
+        return head;
+      }
+      ListNode dummy = new ListNode(-1);
+      dummy.next = head;
+      ListNode temp = dummy;
+      while(temp != null && temp.next != null) {
+        if(temp.next.val == n) {
+          temp.next = temp.next.next;
+        } else {
+          temp = temp.next;
+        }
+      }
+      return dummy.next;
     }
 }
