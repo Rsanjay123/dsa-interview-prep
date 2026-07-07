@@ -1,5 +1,6 @@
 package DSAPREP.ConcurrencyAndMultithreading;
 
+import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -7,40 +8,26 @@ public class TimedTryLock {
   private static int count = 0;
   private static final ReentrantLock lock = new ReentrantLock();
 
-  public static void main(String[] args) throws InterruptedException {
-    Thread t1 = new Thread(new Runnable() {
-      @Override
-      public void run() {
-        for (int i = 0; i < 1000; i++) {
-          try {
-            incrementCount();
-          } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-          }
+  public static void main(String[] args) throws InterruptedException{
+    Runnable task = () -> {
+      for(int i = 0; i < 2000; i++) {
+        try {
+          incrementCount();
+        } catch (InterruptedException e) {
+          throw new RuntimeException();
         }
       }
-    });
-
-    Thread t2 = new Thread(new Runnable() {
-      @Override
-      public void run() {
-        for (int i = 0; i < 1000; i++) {
-          try {
-            incrementCount();
-          } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-          }
-        }
-      }
-    });
+    };
+    Thread t1 = new Thread(task);
+    Thread t2 = new Thread(task);
     t1.start();
     t2.start();
     t1.join();
     t2.join();
-    System.out.println("Final Count: " + count);
+    System.out.println("Final Count : " + count);
   }
 
-  synchronized private static void incrementCount() throws InterruptedException {
+  private static void incrementCount() throws InterruptedException{
     if(lock.tryLock(5, TimeUnit.SECONDS)) {
       try {
         count++;
@@ -48,7 +35,7 @@ public class TimedTryLock {
         lock.unlock();
       }
     } else {
-      System.out.println("lock is busy even after 5 seconds");
+      System.out.println("Lock is Busy");
     }
   }
 }

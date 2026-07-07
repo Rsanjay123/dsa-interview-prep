@@ -6,9 +6,9 @@ public class tryLock {
   private static int count = 0;
   private static final ReentrantLock lock = new ReentrantLock();
 
-  public static void main(String[] args) throws InterruptedException {
+  public static void main(String[] args) throws InterruptedException{
     Runnable task = () -> {
-      for (int i = 0; i < 1000; i++) {
+      for(int i = 0; i < 2000; i++) {
         incrementCount();
       }
     };
@@ -18,10 +18,10 @@ public class tryLock {
     t2.start();
     t1.join();
     t2.join();
-    System.out.println("Final Count: " + count);
+    System.out.println("Final Count : " + count);
   }
 
-  synchronized private static void incrementCount() {
+  private static void incrementCount() {
     if(lock.tryLock()) {
       try {
         count++;
@@ -29,7 +29,7 @@ public class tryLock {
         lock.unlock();
       }
     } else {
-      System.out.println("lock is busy");
+      System.out.println("Lock is Busy");
     }
   }
 }

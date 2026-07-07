@@ -42,7 +42,7 @@ import java.util.*;
  */
 public class ValidNumber {
     public static void main(String[] args) {
-        String s = "  -42.3e+7  ";
+        String s = "0";
         System.out.println(isNumber(s));
     }
 

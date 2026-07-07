@@ -1,12 +1,11 @@
 package DSAPREP.ConcurrencyAndMultithreading;
-import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ReentrantLockUsage {
-  private static int count = 0;
-  private static final ReentrantLock lock = new ReentrantLock();
+  public static int count = 0;
+  public static final ReentrantLock lock = new ReentrantLock();
 
-  public static void main(String[] args) throws InterruptedException {
+  public static void main(String[] args) throws InterruptedException{
     Runnable task = () -> {
       for(int i = 0; i < 2000; i++) {
         incrementCount();
@@ -18,10 +17,10 @@ public class ReentrantLockUsage {
     t2.start();
     t1.join();
     t2.join();
-    System.out.println("Final Count: " + count);
+    System.out.println("Final Count : " + count);
   }
 
-  private static void incrementCount() {
+  public static void incrementCount() {
     lock.lock();
     try {
       count++;
@@ -29,4 +28,28 @@ public class ReentrantLockUsage {
       lock.unlock();
     }
   }
+
+//  public static void main(String[] args) throws InterruptedException{
+//    Thread t1 = new Thread(new Runnable() {
+//      @Override
+//      public void run() {
+//        for (int i = 0; i < 2000; i++) {
+//          incrementCount();
+//        }
+//      }
+//    });
+//    Thread t2 = new Thread(new Runnable() {
+//      @Override
+//      public void run() {
+//        for(int i = 0; i < 2000; i++) {
+//          incrementCount();
+//        }
+//      }
+//    });
+//    t1.start();
+//    t2.start();
+//    t1.join();
+//    t2.join();
+//    System.out.println("Final Count : " + count);
+//  }
 }
